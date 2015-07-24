@@ -4,12 +4,15 @@
 var React = require('react');
 
 var Contact = React.createClass({
+    deleteContact(id){
+        this.props.deleteContact(id);
+    },
     render: function(){
         return (
             <div className='contact'>
                 <div className="name">{this.props.first} {this.props.last}</div>
                 <div className="email">{this.props.email}</div>
-                {this.props.showEdit ? <div className="edit">Edit</div>:
+                {this.props.showEdit ? <div className="edit" onClick={this.deleteContact.bind(this, this.props.id)}>Delete</div>:
                     <div className="edit">&nbsp;</div>}
             </div>
         )

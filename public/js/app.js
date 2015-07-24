@@ -26,6 +26,11 @@ var App = React.createClass({
     componentDidMount(){
         this.loadContacts();
     },
+    deleteContact(id){
+        xhr.deleteJSON('http://localhost:3000/contacts/' + id, function(err, res){
+            this.loadContacts();
+        }.bind(this))
+    },
     submitContact(contact){
         event.preventDefault();
         this.addContact(contact);
@@ -33,7 +38,7 @@ var App = React.createClass({
     render(){
         return (
            <div>
-               <ContactManager contacts={this.state.contacts} />
+               <ContactManager contacts={this.state.contacts} deleteContact={this.deleteContact} />
                <hr />
                <ContactViewer contacts={this.state.contacts} />
                <br />

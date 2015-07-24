@@ -7,7 +7,12 @@ var React = require('react'),
 var ContactManager = React.createClass({
     render(){
         var conts =  this.props.contacts.map((contact) => {
-            return  <Contact first= {contact.first} last={contact.last} email={contact.email} showEdit="true">
+            return  <Contact id={contact.id}
+                             first={contact.first}
+                             last={contact.last}
+                             email={contact.email}
+                             showEdit="true"
+                             deleteContact={this.props.deleteContact}>
             </Contact>
         });
         return (

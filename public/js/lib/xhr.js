@@ -30,3 +30,10 @@ exports.postJSON = (url, obj, cb) => {
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.send(JSON.stringify(obj));
 };
+
+exports.deleteJSON = (url, cb) => {
+    var req = new XMLHttpRequest();
+    req.onload = cb;
+    req.open('DELETE', url);
+    req.send();
+};

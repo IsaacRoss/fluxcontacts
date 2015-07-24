@@ -1,0 +1,29 @@
+{
+  "name": "ContactManager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --inline --no-info --content-base public --port 3500 && node server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "cors": "^2.7.1",
+    "express": "^4.13.1",
+    "flux": "^2.0.3",
+    "jsx-loader": "^0.13.2",
+    "react": "^0.13.3",
+    "webpack": "^1.10.3",
+    "webpack-dev-server": "^1.10.1"
+  },
+  "devDependencies": {
+    "6to5-core": "^3.6.5",
+    "6to5-loader": "^3.0.0",
+    "babel": "^5.8.3",
+    "babel-core": "^5.8.3",
+    "babel-loader": "^5.3.2"
+  }
+}

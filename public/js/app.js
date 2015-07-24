@@ -1,58 +1,51 @@
 var React = require('react'),
-    xhr = require('./lib/xhr'),
+     ContactsStore = require('./stores/ContactsStore'),
+     ViewActionCreators = require('./actions/ViewActionCreators'),
     ContactManager = require('./components/ContactManager'),
     ContactViewer = require('./components/ContactViewer'),
     ContactForm = require('./components/ContactForm');
 
 
 var App = React.createClass({
-    getInitialState(){
-        return {
-            contacts: []
-        }
+    getInitialState () {
+        return ContactsStore.getState();
     },
-    loadContacts(){
-        xhr.getJSON('http://localhost:3000/contacts', function(err, contacts){
-            this.setState({
-                contacts: contacts
-            })
-        }.bind(this));
-    },
-    addContact(contact){
-        xhr.postJSON('http://localhost:3000/contacts', contact, function(err, contacts){
-           this.loadContacts();
-        }.bind(this))
-    },
-    componentDidMount(){
-        this.loadContacts();
-    },
-    deleteContact(id){
-        xhr.deleteJSON('http://localhost:3000/contacts/' + id, function(err, res){
-            this.loadContacts();
-        }.bind(this))
-    },
-    submitContact(contact){
-        event.preventDefault();
-        this.addContact(contact);
-    },
-    render(){
-        return (
-           <div>
-               <ContactManager contacts={this.state.contacts} deleteContact={this.deleteContact} />
-               <hr />
-               <ContactViewer contacts={this.state.contacts} />
-               <br />
-               <ContactForm submitContact={this.submitContact} />
 
-           </div>
-        )
+    componentDidMount () {
+        ContactsStore.addChangeListener(this.handleStoreChange);
+        ViewActionCreators.loadContacts();
+    },
+
+    componentWillUnmount () {
+        ContactsStore.removeChangeListener(this.handleStoreChange);
+    },
+
+    handleStoreChange () {
+        this.setState(ContactsStore.getState());
+    },
+
+    deleteContact (contact) {
+        ViewActionCreators.deleteContact(contact);
+    },
+    submitContact (contact){
+        ViewActionCreators.addContact(contact);
+    },
+
+    render () {
+        if (!this.state.loaded) {
+            return <div>Loading...</div>;
+        }
+
+        return (
+            <div>
+                <ContactManager contacts={this.state.contacts} deleteContact={this.deleteContact} />
+                <hr />
+                <ContactViewer contacts={this.state.contacts} />
+                <br />
+                <ContactForm submitContact={this.submitContact} />
+            </div>
+        );
     }
 });
 
-
-
-
-
 React.render(<App />, document.getElementById('contact-app'));
-
-

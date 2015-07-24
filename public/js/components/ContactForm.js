@@ -15,7 +15,8 @@ var ContactForm = React.createClass({
           email: ''
       }
     },
-    submitContact(){
+    submitContact(event){
+        event.preventDefault();
         var contact = {
             first: this.state.first_name,
             last: this.state.last_name,

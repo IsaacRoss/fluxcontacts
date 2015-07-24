@@ -25,10 +25,12 @@ var contacts = [
 
 
 app.get('/contacts', function(req, res){
+    console.log('requested');
     res.status(200).json(contacts);
 });
 
 app.delete('/contacts/:id', function(req, res){
+    console.log(req.params.id)
     var newContacts = contacts.filter(function(x){
         return x.id != req.params.id
     });
@@ -40,12 +42,9 @@ app.delete('/contacts/:id', function(req, res){
 
 app.post('/contacts', function(req, res){
     var contact = req.body || '';
-    console.log(contact);
     contact.id = uuid.v4();
-    if(contact) {
-        contacts.push(contact);
-        res.status(200).json(contact)
-    }
+    contacts.push(contact);
+    res.status(200).json(contacts);
 });
 
 app.listen(3000, function(){

@@ -3,7 +3,7 @@
  */
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var { EventEmitter } = require('events');
-var { ActionTypes } = require('../constants/constants');
+var { ActionTypes, PayloadSources } = require('../constants/constants');
 var assign = require('react/lib/Object.assign');
 
 var events = new EventEmitter();
@@ -50,7 +50,7 @@ ContactsStore.dispatchToken = AppDispatcher.register((payload) => {
         setState({ contacts: newContacts });
     }
 
-    if( action.type === ActionTypes.CONTACT_ADDED){
+    if( payload.source === PayloadSources.SERVER_ACTION &&  action.type === ActionTypes.CONTACT_ADDED){
         setState({
             loaded: true,
             contacts: Array.prototype.slice.apply(action.contact)

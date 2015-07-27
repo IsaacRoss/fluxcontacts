@@ -11,8 +11,7 @@ var ContactManager = React.createClass({
                              first={contact.first}
                              last={contact.last}
                              email={contact.email}
-                             showEdit="true"
-                             deleteContact={this.props.deleteContact}>
+                             showEdit="true">
             </Contact>
         });
         return (

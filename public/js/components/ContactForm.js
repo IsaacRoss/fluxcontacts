@@ -1,13 +1,11 @@
 /**
  * Created by iross on 7/24/2015.
  */
-var React = require('react');
+var React = require('react'),
+    ViewActionCreator = require('../actions/ViewActionCreators');
 
 
 var ContactForm = React.createClass({
-    propTypes:{
-        submitContact: React.PropTypes.func.isRequired
-    },
     getInitialState(){
       return {
           first_name: '',
@@ -22,7 +20,7 @@ var ContactForm = React.createClass({
             last: this.state.last_name,
             email: this.state.email
         };
-        this.props.submitContact(contact);
+        ViewActionCreator.addContact(contact);
     },
     handleChange(name, event){
         var newState = {};

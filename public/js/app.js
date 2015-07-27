@@ -23,22 +23,13 @@ var App = React.createClass({
     handleStoreChange () {
         this.setState(ContactsStore.getState());
     },
-
-    deleteContact (contact) {
-        ViewActionCreators.deleteContact(contact);
-    },
-    submitContact (contact){
-        ViewActionCreators.addContact(contact);
-    },
-
     render () {
         if (!this.state.loaded) {
             return <div>Loading...</div>;
         }
-
         return (
             <div>
-                <ContactManager contacts={this.state.contacts} deleteContact={this.deleteContact} />
+                <ContactManager contacts={this.state.contacts} />
                 <hr />
                 <ContactViewer contacts={this.state.contacts} />
                 <br />

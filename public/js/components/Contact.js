@@ -1,11 +1,12 @@
 /**
  * Created by iross on 7/24/2015.
  */
-var React = require('react');
+var React = require('react'),
+    ViewActionCreator = require('../actions/ViewActionCreators');
 
 var Contact = React.createClass({
     deleteContact(id){
-        this.props.deleteContact(id);
+        ViewActionCreator.deleteContact(id);
     },
     render: function(){
         return (

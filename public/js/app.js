@@ -1,10 +1,33 @@
 var React = require('react'),
      ContactsStore = require('./stores/ContactsStore'),
+    ContactSummaryStore = require('./stores/ContactSummaryStore'),
      ViewActionCreators = require('./actions/ViewActionCreators'),
     ContactManager = require('./components/ContactManager'),
     ContactViewer = require('./components/ContactViewer'),
     ContactForm = require('./components/ContactForm');
 
+
+var Summary = React.createClass({
+    getInitialState(){
+        return ContactSummaryStore.getState();
+    },
+    componentDidMount(){
+        ContactSummaryStore.addChangeListener(this.handleStoreChange);
+    },
+    componentWillUnmount(){
+        ContactSummaryStore.removeChangeListener(this.handleStoreChange);
+    },
+    handleStoreChange(){
+        this.setState(ContactSummaryStore.getState)
+    },
+    render(){
+        return (
+            <div>
+                There are {this.state.contactNumber} contacts loaded.
+            </div>
+        )
+    }
+});
 
 var App = React.createClass({
     getInitialState () {
@@ -34,6 +57,7 @@ var App = React.createClass({
                 <ContactViewer contacts={this.state.contacts} />
                 <br />
                 <ContactForm submitContact={this.submitContact} />
+                <Summary />
             </div>
         );
     }

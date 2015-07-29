@@ -11,7 +11,7 @@ var ContactViewer = React.createClass({
             </Contact>
         });
         return (
-            <div>{conts}</div>
+            <div className="contact-viewer">{conts}</div>
         )
     }
 });

@@ -1,39 +1,19 @@
 var React = require('react'),
      ContactsStore = require('./stores/ContactsStore'),
-    ContactSummaryStore = require('./stores/ContactSummaryStore'),
      ViewActionCreators = require('./actions/ViewActionCreators'),
     ContactManager = require('./components/ContactManager'),
     ContactViewer = require('./components/ContactViewer'),
-    ContactForm = require('./components/ContactForm');
+    ContactForm = require('./components/ContactForm'),
+    Summary = require('./components/Summary'),
+    TsInput = require('./components/TsInput');
 
 
-var Summary = React.createClass({
-    getInitialState(){
-        return ContactSummaryStore.getState();
-    },
-    componentDidMount(){
-        ContactSummaryStore.addChangeListener(this.handleStoreChange);
-    },
-    componentWillUnmount(){
-        ContactSummaryStore.removeChangeListener(this.handleStoreChange);
-    },
-    handleStoreChange(){
-        this.setState(ContactSummaryStore.getState)
-    },
-    render(){
-        return (
-            <div>
-                There are {this.state.contactNumber} contacts loaded.
-            </div>
-        )
-    }
-});
+
 
 var App = React.createClass({
     getInitialState () {
         return ContactsStore.getState();
     },
-
     componentDidMount () {
         ContactsStore.addChangeListener(this.handleStoreChange);
         ViewActionCreators.loadContacts();

@@ -53,7 +53,7 @@ ContactsStore.dispatchToken = AppDispatcher.register((payload) => {
     if( payload.source === PayloadSources.SERVER_ACTION &&  action.type === ActionTypes.CONTACT_ADDED){
         setState({
             loaded: true,
-            contacts: Array.prototype.slice.apply(action.contact)
+            contacts: action.contact
         });
     }
 

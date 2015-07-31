@@ -3,10 +3,11 @@
  */
 
 var Validations = {
-    required: (input, message) =>{
+    required: (input, message, cb) => {
         if(!input){
-            return message;
+            return cb(false, message);
         }
+        return cb(true);
     }
 };
 

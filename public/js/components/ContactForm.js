@@ -10,9 +10,7 @@ var React = require('react'),
 var ContactForm = React.createClass({
     getInitialState(){
       return {
-          first_name: '',
-          last_name: '',
-          email: ''
+          first_name: {value: '', valid: false }
       }
     },
     submitContact(event){
@@ -24,18 +22,25 @@ var ContactForm = React.createClass({
         };
         ViewActionCreator.addContact(contact);
     },
-    handleChange(name, value){
-
+    handleChange(name, value, valid){
+        console.log(value)
         var newState = {};
-        newState[name] = value
+        newState[name] = {
+            value,
+            valid
+        };
         this.setState(newState);
     },
     render(){
         return (
             <form onSubmit={this.submitContact}>
-                <TsInput onChange={this.handleChange} name="First Name" fieldName="first_name" />
-                <TsInput onChange={this.handleChange} name="Last Name" fieldName="last_name" />
-                <TsInput onChange={this.handleChange} name="Email" fieldName="email" />
+                <TsInput name="First Name"
+                         fieldName="first_name"
+                         validation={Validations.required}
+                         placeholder="Enter First Name"
+                         value={this.state.first_name.value}
+                         inputChanged={this.handleChange}/>
+
 
                 <button type="submit">Add Contact</button>
 

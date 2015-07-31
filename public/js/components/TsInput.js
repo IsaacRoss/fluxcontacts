@@ -6,39 +6,38 @@ var React = require('react'),
 
 var TsInput = React.createClass({
     propTypes: {
-        onChange: React.PropTypes.func,
+        inputChanged: React.PropTypes.func,
         fieldName: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired
+        name: React.PropTypes.string.isRequired,
+        validation: React.PropTypes.func,
+        placeholder: React.PropTypes.string
     },
     getInitialState(){
         return {
-            value: this.props.defaultValue || '',
-            validationMessage: ''
+            valid: false,
+            value: ''
         }
     },
     handleChange(event){
-        var validation = Validations.required(event.target.value, "* This field is required.");
-        this.setState({
-            value: event.target.value,
-            validationMessage: validation
-        });
-        this.props.onChange(this.props.fieldName, event.target.value);
+        this.props.validation(this.props.value, "REQUIRED", function(valid, msg){
+            this.props.inputChanged(this.props.fieldName, event.target.value, valid);
+        }.bind(this))
+
     },
     render(){
+        var {name, fieldName, ...other} = this.props;
+        var className = this.state.valid ? 'valid' : 'invalid';
         return (
-
             <div className='form-field'>
-                <label htmlFor="first_name">{this.props.name}: </label>
+                <label htmlFor={fieldName}>{name}: </label>
             <input
                 type="text"
-                name="first_name"
-                value={this.state.value}
-                onChange={this.handleChange} />
-                <div className="validation-error">{this.state.validationMessage}</div>
+                name={fieldName}
+                onChange={this.handleChange}
+                className={'input-' + className}
+                {...other} />
             </div>
-
         )
-
     }
 });
 

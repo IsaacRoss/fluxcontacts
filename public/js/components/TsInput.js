@@ -9,33 +9,53 @@ var TsInput = React.createClass({
         inputChanged: React.PropTypes.func,
         fieldName: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
+        validationMessage: React.PropTypes.string,
         validation: React.PropTypes.func,
         placeholder: React.PropTypes.string
     },
     getInitialState(){
         return {
-            valid: false,
-            value: ''
+            value: '',
+            valid: true,
+            dirty: false
         }
     },
     handleChange(event){
-        this.props.validation(this.props.value, "REQUIRED", function(valid, msg){
-            this.props.inputChanged(this.props.fieldName, event.target.value, valid);
-        }.bind(this))
-
+        if(!this.state.dirty){
+            this.setState({
+                dirty: true,
+                value: event.target.value
+            });
+        }else{
+            this.setState({
+                value: event.target.value
+            }, function(){
+                this.props.validation(this.state.value, this.props.validationMessage, function(valid, msg){
+                    this.props.inputChanged(this.props.fieldName, this.state.value, valid);
+                    this.setState({
+                        valid,
+                        msg
+                    })
+                }.bind(this))
+            })
+        }
     },
     render(){
+        var valid = this.state.valid;
         var {name, fieldName, ...other} = this.props;
-        var className = this.state.valid ? 'valid' : 'invalid';
+        var className = valid ? 'valid' : 'invalid';
+        var errorspan = valid ? <span></span> : <span className='error-message'>{this.state.msg}</span>;
         return (
             <div className='form-field'>
                 <label htmlFor={fieldName}>{name}: </label>
             <input
                 type="text"
                 name={fieldName}
+                value={this.state.value}
                 onChange={this.handleChange}
                 className={'input-' + className}
                 {...other} />
+                {errorspan}
             </div>
         )
     }

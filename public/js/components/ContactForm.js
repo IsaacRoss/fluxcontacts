@@ -10,7 +10,9 @@ var React = require('react'),
 var ContactForm = React.createClass({
     getInitialState(){
       return {
-          first_name: {value: '', valid: false }
+          first_name: {value: '', valid: false },
+          last_name: {value: '', valid: false },
+          email: {value: '', valid: false}
       }
     },
     submitContact(event){
@@ -20,10 +22,15 @@ var ContactForm = React.createClass({
             last: this.state.last_name,
             email: this.state.email
         };
-        ViewActionCreator.addContact(contact);
+        var valid = Object.keys(contact).every(function(x){
+            return contact[x].valid === true;
+        });
+        if(valid){
+            ViewActionCreator.addContact(contact);
+        }
+
     },
     handleChange(name, value, valid){
-        console.log(value)
         var newState = {};
         newState[name] = {
             value,
@@ -37,12 +44,26 @@ var ContactForm = React.createClass({
                 <TsInput name="First Name"
                          fieldName="first_name"
                          validation={Validations.required}
+                         validationMessage="This Field Is Required"
                          placeholder="Enter First Name"
-                         value={this.state.first_name.value}
+                         inputChanged={this.handleChange}/>
+
+                <TsInput name="Last Name"
+                         fieldName="last_name"
+                         validation={Validations.required}
+                         validationMessage="This Field Is Required"
+                         placeholder="Enter Last Name"
+                         inputChanged={this.handleChange}/>
+
+                <TsInput name="Email"
+                         fieldName="email"
+                         validation={Validations.required}
+                         validationMessage="This Field Is Required"
+                         placeholder="Enter email"
                          inputChanged={this.handleChange}/>
 
 
-                <button type="submit">Add Contact</button>
+                <button id="submit" type="submit">Add Contact</button>
 
             </form>
 

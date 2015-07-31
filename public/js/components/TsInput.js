@@ -2,7 +2,8 @@
  * Created by iross on 7/29/2015.
  */
 var React = require('react'),
-    Validations = require('../utils/Validations');
+    Validations = require('../utils/Validations'),
+    Utilities = require('../utils/utilities');
 
 var TsInput = React.createClass({
     propTypes: {
@@ -20,6 +21,9 @@ var TsInput = React.createClass({
             dirty: false
         }
     },
+    componentWillMount(){
+        this.beginValidation = Utilities.debounce(this.props.validation, 250);
+    },
     handleChange(event){
         if(!this.state.dirty){
             this.setState({
@@ -30,7 +34,7 @@ var TsInput = React.createClass({
             this.setState({
                 value: event.target.value
             }, function(){
-                this.props.validation(this.state.value, this.props.validationMessage, function(valid, msg){
+                this.beginValidation(this.state.value, this.props.validationMessage, function(valid, msg){
                     this.props.inputChanged(this.props.fieldName, this.state.value, valid);
                     this.setState({
                         valid,

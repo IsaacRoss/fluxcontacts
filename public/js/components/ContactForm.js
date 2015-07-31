@@ -57,8 +57,8 @@ var ContactForm = React.createClass({
 
                 <TsInput name="Email"
                          fieldName="email"
-                         validation={Validations.required}
-                         validationMessage="This Field Is Required"
+                         validation={Validations.validEmail}
+                         validationMessage="That is not a valid email"
                          placeholder="Enter email"
                          inputChanged={this.handleChange}/>
 

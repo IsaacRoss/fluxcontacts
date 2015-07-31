@@ -8,6 +8,9 @@ var Validations = {
             return cb(false, message);
         }
         return cb(true);
+    },
+    validEmail: (input, message, cb) => {
+        return cb(/^.+@.+\..+$/.test(input), message);
     }
 };
 

@@ -2,6 +2,7 @@ var path = require('path'),
     webpack = require('webpack'),
     fs = require('fs'),
     React = require('react');
+    //RewirePlugin = require('rewire-webpack');
 
 
 module.exports = {
@@ -13,11 +14,23 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.js$/, loader: "jsx-loader?harmony"}
+            {
+                test: /\.jsx?$/,
+                exclude: /(node_modules|bower_components)/,
+                loader: 'babel',
+                query: {
+                    optional: ['runtime'],
+                    stage: 2
+                },
+                plugins: [
+                    require('babel-plugin-rewire')
+                ]
+            }
         ]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('shared.js')
+        //new webpack.optimize.CommonsChunkPlugin('shared.js')
+        //new RewirePlugin()
     ]
 };
 

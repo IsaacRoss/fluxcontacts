@@ -53,12 +53,13 @@ var TsInput = React.createClass({
             <div className='form-field'>
                 <label htmlFor={fieldName}>{name}: </label>
             <input
+                {...other}
                 type="text"
                 name={fieldName}
                 value={this.state.value}
                 onChange={this.handleChange}
                 className={'input-' + className}
-                {...other} />
+                />
                 {errorspan}
             </div>
         )

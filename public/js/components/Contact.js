@@ -17,7 +17,7 @@ var Contact = React.createClass({
             email: 'me@you.com'
         }
     },
-    render: function(){
+    render(){
         return (
             <div className='contact'>
                 <div className="name">{this.props.first} {this.props.last}</div>

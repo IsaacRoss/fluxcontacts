@@ -3,10 +3,11 @@
  */
 
 
-function message(){
-    return "Hello World";
-}
-
-export function foo(){
-    return message();
+export default {
+    cool: function(){
+        return "I am cool"
+    },
+    notCool: function(){
+        return "I am not cool"
+    }
 }

@@ -1,12 +1,14 @@
 /**
  * Created by iross on 7/24/2015.
  */
-var React = require('react'),
-    ViewActionCreator = require('../actions/ViewActionCreators');
+var React = require('react');
+    //ViewActionCreators = require('../actions/ViewActionCreators');
+
+import { deleteContact } from '../actions/ViewActionCreators.js';
 
 var Contact = React.createClass({
     deleteContact(id){
-        ViewActionCreator.deleteContact(id);
+        deleteContact(id);
     },
     getDefaultProps(){
         return {
